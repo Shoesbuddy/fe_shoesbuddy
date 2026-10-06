@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #fefeff;
   --foreground: #171717;
 }
 
@@ -23,14 +23,22 @@
   body {
     background-color: var(--background);
     color: var(--foreground);
+    @apply backdrop-blur-md;
   }
   section {
     @apply min-h-screen snap-start;
+  }
+
+  header {
+    @apply transition-colors duration-300 ease-in-out;
   }
 }
 
 @layer components {
   .nav-link {
-    @apply hover:text-amber-500 transition-colors duration-300 ease-in-out;
+    @apply text-[#A4B0BD] hover:text-amber-500 transition-colors duration-300 ease-in-out;
+  }
+  .cont {
+    @apply pt-20;
   }
 }
