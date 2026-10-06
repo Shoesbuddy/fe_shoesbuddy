@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "@/component/Animations/SmoothScroll";
 import { Header } from "@/component";
 import ContextProvider from "@/context";
 
@@ -22,14 +21,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body
-        className="min-h-screen relative overflow-y-auto"
-        cz-shortcut-listen="true"
-      >
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+      <body className="min-h-screen relative overflow-y-auto" cz-shortcut-listen="true">
         <ContextProvider>
           <Header />
           <main>{children}</main>
