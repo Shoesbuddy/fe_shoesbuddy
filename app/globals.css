@@ -19,8 +19,21 @@
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+   section {
+     @apply min-h-screen snap-start;
+   }
 }
+    
+
+@layer components {
+  .nav-link {
+    @apply hover:text-amber-500 transition-colors duration-300 ease-in-out;
+
+  }
+}
+
