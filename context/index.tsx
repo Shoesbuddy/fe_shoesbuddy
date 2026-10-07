@@ -1,22 +1,29 @@
 "use client";
-import { SmoothScroll } from "@/component/Animations";
 
-import React, { createContext, Fragment } from "react";
+import React, { createContext } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-type contextType = {
+import { ScrollAnimations, ScrollRefresh } from "@/utils";
+
+gsap.registerPlugin(ScrollTrigger);
+
+type ContextType = {
   user: string;
 };
 
-export const Context = createContext<contextType | undefined>(undefined);
+export const Context = createContext<ContextType | undefined>(undefined);
 
 const ContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // gsap.registerPlugin(SplitText);
-  const _values: contextType = { user: "" };
+  const values: ContextType = {
+    user: "",
+  };
 
   return (
-    <Context.Provider value={_values}>
-      <SmoothScroll />
-      <Fragment>{children}</Fragment>
+    <Context.Provider value={values}>
+      <ScrollRefresh />
+      <ScrollAnimations />
+      {children}
     </Context.Provider>
   );
 };

@@ -3,14 +3,17 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 import gsap from "gsap";
+import { usePathname } from "next/navigation";
 
 export default function SmoothScroll() {
+  const pathaname = usePathname();
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 1,
+      syncTouch: true,
     });
 
     const update = (time: number) => {
@@ -25,7 +28,7 @@ export default function SmoothScroll() {
       gsap.ticker.remove(update);
       lenis.destroy();
     };
-  }, []);
+  }, [pathaname]);
 
   return null;
 }
