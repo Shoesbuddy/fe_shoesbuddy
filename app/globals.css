@@ -3,6 +3,10 @@
 :root {
   --background: #fefeff;
   --foreground: #171717;
+  --ink: #1b1b19;
+  --muted: #77766f;
+  --paper: #f7f6f2;
+  --accent: #e45e36;
 }
 
 @theme inline {
@@ -10,6 +14,10 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+@theme {
+  --gallery-glow: radial-gradient(circle, rgb(230 99 57 / 11%), transparent 70%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -35,10 +43,568 @@
 }
 
 @layer components {
+  /* =========================================================
+     COMMON
+     ========================================================= */
+
   .nav-link {
-    @apply text-[#A4B0BD] hover:text-amber-500 transition-colors duration-300 ease-in-out;
+    @apply text-[#A4B0BD] transition-colors duration-300 ease-in-out hover:text-amber-500;
   }
+
   .cont {
     @apply pt-20;
+  }
+
+  /* =========================================================
+     GALLERY PAGE
+     ========================================================= */
+
+  .gallery-page {
+    color: var(--ink);
+    background: var(--paper);
+
+    @apply overflow-hidden;
+  }
+
+  /* =========================================================
+     HERO
+     ========================================================= */
+
+  .gallery-hero {
+    @apply relative min-h-172.5 overflow-hidden bg-[#f7f6f2] px-[max(6vw,calc((100vw-1240px)/2))] pt-19 pb-7;
+
+    @apply max-lg:px-[6vw] max-md:min-h-auto max-md:pt-13.5 max-md:pb-5.75 max-[520px]:px-5.5;
+  }
+
+  .gallery-heroGlow {
+    @apply pointer-events-none absolute -top-67.5 right-[21%] h-145 w-145 rounded-full bg-(--gallery-glow) animate-[gallery-glow-drift_8s_ease-in-out_infinite_alternate];
+  }
+
+  .gallery-heroInner {
+    @apply relative z-1 mx-auto grid min-h-130 max-w-310 grid-cols-[minmax(0,0.93fr)_minmax(360px,1.07fr)] items-center gap-[clamp(42px,8vw,120px)];
+
+    @apply max-lg:grid-cols-[minmax(0,0.9fr)_minmax(320px,1fr)] max-lg:gap-[5vw] max-md:grid-cols-1 max-md:gap-8.75;
+  }
+
+  .gallery-heroCopy {
+    @apply animate-[gallery-fade-up_800ms_cubic-bezier(0.2,0.7,0.2,1)_both] px-0 py-5;
+
+    @apply max-md:pb-0;
+  }
+
+  /* =========================================================
+     HERO EYEBROW
+     ========================================================= */
+
+  .gallery-eyebrow,
+  .gallery-sectionEyebrow {
+    @apply m-0 flex items-center gap-2.5 text-[11px] font-bold leading-normal tracking-[0.18em] text-[#6c6b65] uppercase;
+  }
+
+  .gallery-eyebrowDot {
+    @apply h-1.75 w-1.75 rounded-full shadow-[0_0_0_5px_rgb(228_94_54/12%)];
+
+    background: var(--accent);
+  }
+
+  /* =========================================================
+     HERO TITLE
+     ========================================================= */
+
+  .gallery-heroCopy h1 {
+    @apply mx-0 mt-6.5 mb-5 text-[clamp(52px,6.4vw,88px)] font-[650] leading-[0.98] tracking-[-0.085em];
+
+    @apply max-md:text-[clamp(52px,11vw,76px)];
+  }
+
+  .gallery-heroCopy h1 span {
+    @apply text-[0.92em] font-normal italic tracking-[-0.075em] text-(--accent);
+
+    font-family: Georgia, "Times New Roman", serif;
+  }
+
+  /* =========================================================
+     HERO DESCRIPTION
+     ========================================================= */
+
+  .gallery-heroDescription {
+    @apply m-0 max-w-102.5 text-[15px] leading-[1.85] text-[#77766f];
+
+    @apply max-md:max-w-117.5 max-[520px]:text-xs;
+  }
+
+  /* =========================================================
+     HERO LINK
+     ========================================================= */
+
+  .gallery-heroLink,
+  .gallery-shopLink {
+    @apply inline-flex items-center gap-3.25 text-[13px] font-[650] text-(--ink) no-underline;
+  }
+
+  .gallery-heroLink {
+    @apply mt-7.5 border-b border-solid border-b-[rgb(27_27_25/35%)] pb-2.25 transition-[gap,border-color] duration-220 ease-in-out hover:gap-5 hover:border-(--accent);
+  }
+
+  .gallery-heroLink svg,
+  .gallery-shopLink svg,
+  .gallery-viewIcon svg,
+  .gallery-nextButton svg {
+    @apply h-4.25 w-4.25;
+  }
+
+  /* =========================================================
+     HERO VISUAL
+     ========================================================= */
+
+  .gallery-heroVisual {
+    @apply relative w-full max-w-133.75 justify-self-end animate-[gallery-fade-in_1s_120ms_ease_both];
+
+    @apply max-md:w-[min(100%,540px)] max-md:justify-self-center;
+  }
+
+  .gallery-heroImage {
+    @apply relative aspect-[0.98] overflow-hidden rounded-[48%_48%_5px_5px];
+
+    background: #e4e1da;
+
+    @apply max-md:aspect-[1.2] max-md:rounded-[40%_40%_4px_4px];
+  }
+
+  .gallery-heroPhoto {
+    @apply object-cover object-center animate-[gallery-image-arrive_1.1s_cubic-bezier(0.2,0.7,0.2,1)_both];
+  }
+
+  /* =========================================================
+     FLOATING NOTE
+     ========================================================= */
+
+  .gallery-floatingNote {
+    @apply absolute -right-9 bottom-12 flex items-center gap-3 rounded-[5px] border border-solid border-[rgb(27_27_25/6%)] bg-[#fffefa] py-3.5 pr-5 pl-3.75 shadow-[0_16px_46px_rgb(29_26_21/12%)] animate-[gallery-float_4.5s_ease-in-out_infinite];
+
+    @apply max-lg:-right-3 max-md:-right-3;
+  }
+
+  .gallery-noteIcon {
+    @apply grid h-9 w-9 place-items-center rounded-full text-[19px] text-(--accent);
+
+    background: #f9e8df;
+  }
+
+  .gallery-floatingNote strong,
+  .gallery-floatingNote small {
+    @apply block;
+  }
+
+  .gallery-floatingNote strong {
+    @apply text-xs font-bold;
+  }
+
+  .gallery-floatingNote small {
+    @apply mt-1 text-[10px] text-(--muted);
+  }
+
+  /* =========================================================
+     HERO INDEX / FOOTER
+     ========================================================= */
+
+  .gallery-heroIndex {
+    @apply absolute top-4.5 right-0 text-[10px] tracking-[0.15em] text-[#73716a];
+  }
+
+  .gallery-heroFooter {
+    @apply mx-auto mt-8.5 mb-0 flex max-w-310 items-center gap-4.25 text-[9px] font-[650] tracking-[0.16em] text-[#8b8981];
+
+    @apply max-[520px]:gap-2.5 max-[520px]:text-[7px];
+  }
+
+  .gallery-footerRule {
+    @apply h-px w-13.5;
+
+    background: #d8d5cd;
+
+    @apply max-[520px]:w-7;
+  }
+
+  /* =========================================================
+     COLLECTION
+     ========================================================= */
+
+  .gallery-collection {
+    @apply bg-white px-[max(6vw,calc((100vw-1240px)/2))] pt-27 pb-18;
+
+    @apply max-lg:px-[6vw] max-md:pt-19 max-[520px]:px-5 max-[520px]:pt-16.25 max-[520px]:pb-11.5;
+  }
+
+  .gallery-collectionHeader {
+    @apply mx-auto flex max-w-310 items-end justify-between gap-8;
+
+    @apply max-[520px]:flex-col max-[520px]:items-start max-[520px]:gap-3.5;
+  }
+
+  .gallery-sectionEyebrow {
+    @apply text-[10px] text-(--accent);
+  }
+
+  .gallery-collectionHeader h2 {
+    @apply mx-0 mt-2.5 mb-0 text-[clamp(38px,4.6vw,58px)] font-semibold leading-none tracking-[-0.075em];
+  }
+
+  .gallery-collectionIntro {
+    @apply m-0 mb-1.25 text-[13px] leading-[1.8] text-[#77766f];
+
+    @apply max-[520px]:text-xs;
+  }
+
+  /* =========================================================
+     FILTERS
+     ========================================================= */
+
+  .gallery-filters {
+    @apply flex gap-2.25 max-w-310 overflow-x-auto mt-10 mb-6.25 mx-auto;
+
+    scrollbar-width: none;
+
+    @apply max-[520px]:mt-6.75;
+  }
+
+  .gallery-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-filterButton {
+    @apply inline-flex min-h-9.75 flex-[0_0_auto] cursor-pointer items-center gap-2 rounded-full border border-solid border-[#e9e8e3] bg-white px-3.75 py-0 text-[11px] text-[#77766f] transition-[color,border-color,background,transform] duration-180 ease-in-out hover:-translate-y-0.5 hover:border-[#c9c5bc] hover:text-(--ink);
+
+    font: inherit;
+  }
+
+  .gallery-filterActive,
+  .gallery-filterActive:hover {
+    @apply border-(--ink) bg-(--ink) text-white;
+  }
+
+  .gallery-filterCount {
+    @apply grid h-4.5 w-4.5 place-items-center rounded-full text-[9px];
+
+    background: rgb(255 255 255 / 17%);
+  }
+
+  /* =========================================================
+     GALLERY GRID
+     ========================================================= */
+
+  .gallery-grid {
+    @apply mx-auto grid max-w-310 grid-flow-dense grid-cols-3 gap-4 auto-rows-[clamp(190px,22vw,280px)];
+
+    @apply max-md:grid-cols-2 max-md:auto-rows-[clamp(200px,42vw,310px)] max-[520px]:gap-2.5 max-[520px]:auto-rows-55;
+  }
+
+  .gallery-card {
+    @apply relative min-h-0 min-w-0 overflow-hidden rounded bg-[#e9e7e1] animate-[gallery-fade-up_650ms_cubic-bezier(0.2,0.7,0.2,1)_both];
+  }
+
+  .gallery-cardFeature {
+    @apply col-span-2 row-span-2;
+
+    @apply max-md:col-span-2 max-md:row-span-1 max-[520px]:col-span-2;
+  }
+
+  /* =========================================================
+     CARD BUTTON
+     ========================================================= */
+
+  .gallery-cardButton {
+    @apply absolute inset-0 block h-full w-full cursor-zoom-in overflow-hidden border-0 p-0 text-left text-white;
+
+    background: transparent;
+  }
+
+  .gallery-cardImage {
+    @apply object-cover transition-transform duration-750 ease-[cubic-bezier(0.2,0.7,0.2,1)];
+  }
+
+  .gallery-cardButton:hover .gallery-cardImage,
+  .gallery-cardButton:focus-visible .gallery-cardImage {
+    @apply scale-[1.055];
+  }
+
+  /* =========================================================
+     CARD SHADE
+     ========================================================= */
+
+  .gallery-cardShade {
+    @apply absolute inset-0 transition-[background] duration-240 ease-in-out;
+
+    background: linear-gradient(
+      180deg,
+      rgb(0 0 0 / 26%) 0%,
+      transparent 32%,
+      transparent 46%,
+      rgb(0 0 0 / 62%) 100%
+    );
+  }
+
+  .gallery-cardButton:hover .gallery-cardShade,
+  .gallery-cardButton:focus-visible .gallery-cardShade {
+    background: linear-gradient(
+      180deg,
+      rgb(0 0 0 / 36%) 0%,
+      transparent 35%,
+      transparent 40%,
+      rgb(0 0 0 / 72%) 100%
+    );
+  }
+
+  /* =========================================================
+     CARD TOPLINE
+     ========================================================= */
+
+  .gallery-cardTopline {
+    @apply absolute inset-x-4 top-4 flex items-center justify-between;
+
+    @apply max-[520px]:inset-x-2.5 max-[520px]:top-2.5;
+  }
+
+  .gallery-cardCategory {
+    @apply rounded-full border border-solid border-[rgb(255_255_255/45%)] px-2.5 py-1.75 text-[9px] tracking-[0.07em] backdrop-blur;
+
+    background: rgb(20 20 18 / 20%);
+
+    @apply max-[520px]:px-2 max-[520px]:py-1.5 max-[520px]:text-[8px];
+  }
+
+  /* =========================================================
+     VIEW ICON
+     ========================================================= */
+
+  .gallery-viewIcon {
+    @apply grid h-8.75 w-8.75 -translate-x-1.25 translate-y-1 place-items-center rounded-full border border-solid border-[rgb(255_255_255/55%)] bg-[rgb(20_20_18/18%)] opacity-0 transition-[opacity,transform,background] duration-220 ease-in-out;
+
+    @apply max-md:translate-x-0 max-md:translate-y-0 max-md:opacity-100 max-[520px]:h-7.5 max-[520px]:w-7.5;
+  }
+
+  .gallery-cardButton:hover .gallery-viewIcon,
+  .gallery-cardButton:focus-visible .gallery-viewIcon {
+    @apply translate-x-0 translate-y-0 bg-(--accent) opacity-100;
+  }
+
+  .gallery-viewIcon svg {
+    @apply max-[520px]:h-3.5 max-[520px]:w-3.5;
+  }
+
+  /* =========================================================
+     CARD CAPTION
+     ========================================================= */
+
+  .gallery-cardCaption {
+    @apply absolute inset-x-5 bottom-4.75 flex translate-y-0.75 flex-col gap-1.5 transition-transform duration-220 ease-in-out;
+
+    @apply max-[520px]:inset-x-3 max-[520px]:bottom-3.25;
+  }
+
+  .gallery-cardButton:hover .gallery-cardCaption,
+  .gallery-cardButton:focus-visible .gallery-cardCaption {
+    @apply translate-y-0;
+  }
+
+  .gallery-cardCaption strong {
+    @apply text-[clamp(15px,1.5vw,19px)] font-semibold tracking-[-0.035em];
+
+    @apply max-[520px]:text-sm;
+  }
+
+  .gallery-cardCaption > span {
+    @apply text-[11px] text-[rgb(255_255_255/79%)];
+
+    @apply max-[520px]:text-[9px];
+  }
+
+  /* =========================================================
+     BOTTOM NOTE
+     ========================================================= */
+
+  .gallery-bottomNote {
+    @apply mx-auto mt-12 flex max-w-310 items-center justify-center gap-4 border-y border-solid border-y-[#efeee9] p-5.75;
+
+    @apply max-md:flex-wrap max-md:text-center max-[520px]:mt-7.25 max-[520px]:gap-2.5 max-[520px]:px-1.25 max-[520px]:py-4.75;
+  }
+
+  .gallery-bottomSpark {
+    @apply text-xl text-(--accent);
+  }
+
+  .gallery-bottomNote p {
+    @apply m-0 text-[15px] italic text-[#77766f];
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    @apply max-[520px]:flex-1 max-[520px]:text-[13px];
+  }
+
+  .gallery-shopLink {
+    @apply ml-3.25 whitespace-nowrap transition-colors duration-180 ease-in-out hover:text-(--accent);
+
+    @apply max-[520px]:ml-0 max-[520px]:text-[11px];
+  }
+
+  /* =========================================================
+     LIGHTBOX
+     ========================================================= */
+
+  .gallery-lightbox {
+    @apply fixed inset-0 z-100 grid place-items-center p-6 backdrop-blur-[10px] animate-[gallery-fade-in_180ms_ease_both];
+
+    background: rgb(20 20 18 / 82%);
+
+    @apply max-[520px]:p-3.25;
+  }
+
+  .gallery-lightboxPanel {
+    @apply relative w-[min(900px,100%)] bg-[#f7f6f2] p-3 shadow-[0_30px_100px_rgb(0_0_0/35%)] animate-[gallery-scale-in_240ms_cubic-bezier(0.2,0.7,0.2,1)_both];
+
+    @apply max-[520px]:p-1.75;
+  }
+
+  .gallery-lightboxImage {
+    @apply relative h-[min(68vh,660px)] w-full;
+
+    background: #e8e6df;
+
+    @apply max-[520px]:h-[min(58vh,520px)];
+  }
+
+  .gallery-lightboxPhoto {
+    @apply object-contain;
+  }
+
+  /* =========================================================
+     CLOSE BUTTON
+     ========================================================= */
+
+  .gallery-closeButton {
+    @apply absolute top-5.5 right-5.5 z-2 grid h-9.5 w-9.5 cursor-pointer place-items-center rounded-full border border-solid border-[rgb(255_255_255/50%)] bg-[rgb(20_20_18/45%)] text-[25px] leading-none text-white transition-[background,transform] duration-180 ease-in-out hover:rotate-90 hover:bg-(--accent);
+  }
+
+  /* =========================================================
+     LIGHTBOX CAPTION
+     ========================================================= */
+
+  .gallery-lightboxCaption {
+    @apply flex items-center justify-between gap-5 px-3 pt-4.75 pb-2.75;
+
+    @apply max-[520px]:px-1.75 max-[520px]:pt-3.5 max-[520px]:pb-2;
+  }
+
+  .gallery-lightboxCaption span {
+    @apply text-[9px] font-bold tracking-[0.14em] text-(--accent) uppercase;
+  }
+
+  .gallery-lightboxCaption h2 {
+    @apply mx-0 mt-1.25 mb-1 text-xl font-semibold tracking-[-0.04em];
+
+    @apply max-[520px]:text-[17px];
+  }
+
+  .gallery-lightboxCaption p {
+    @apply m-0 text-[11px] text-(--muted);
+
+    @apply max-[520px]:text-[10px];
+  }
+
+  /* =========================================================
+     NEXT BUTTON
+     ========================================================= */
+
+  .gallery-nextButton {
+    @apply grid h-10.75 w-10.75 flex-[0_0_auto] place-items-center cursor-pointer rounded-full border border-solid border-[#dedcd4] bg-transparent text-(--ink) transition-[color,background,border-color] duration-180 ease-in-out hover:border-(--ink) hover:bg-(--ink) hover:text-white;
+  }
+
+  .gallery-arrowLeft {
+    @apply rotate-180;
+  }
+
+  /* =========================================================
+     MOBILE-ONLY ELEMENT
+     ========================================================= */
+
+  .gallery-desktopBreak {
+    @apply max-[520px]:hidden;
+  }
+
+  /* =========================================================
+     REDUCED MOTION
+     ========================================================= */
+
+  @media (prefers-reduced-motion: reduce) {
+    .gallery-page *,
+    .gallery-page *::before,
+    .gallery-page *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+/* Shooz Buddy gallery */
+
+@keyframes gallery-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gallery-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes gallery-image-arrive {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes gallery-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes gallery-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes gallery-glow-drift {
+  from {
+    transform: translate3d(-10px, 0, 0) scale(0.92);
+  }
+  to {
+    transform: translate3d(15px, 18px, 0) scale(1.08);
   }
 }

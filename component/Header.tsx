@@ -1,17 +1,9 @@
 "use client";
 
+import { navItems } from "@/utils/constant";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-
-const navItems = [
-  { href: "/", label: "Home" },
-  { href: "shop", label: "Shop Now" },
-  { href: "categories", label: "Categories" },
-  { href: "products", label: "Product" },
-  { href: "contact-us", label: "Contact Us" },
-  { href: "gallery", label: "Gallery" },
-] as const;
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,11 +19,11 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 md:flex">
-          {navItems.map((item) => (
+          {navItems.map((item, index) => (
             <Link
-              key={item.href}
-              href={String("#").concat(String(item.href))}
-              className={`nav-link ${pathname === item.href && "text-amber-500"}`}>
+              key={index}
+              href={item.href}
+              className={`nav-link ${pathname === item.href ? "text-amber-500" : ""}`}>
               {item.label}
             </Link>
           ))}
@@ -57,7 +49,7 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className={` nav-link ${pathname === item.href && "text-amber-500"}`}>
+                className={`nav-link ${pathname === item.href ? "text-amber-500" : ""}`}>
                 {item.label}
               </Link>
             ))}
