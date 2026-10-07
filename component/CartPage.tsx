@@ -1,8 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { useMemo, useState, useSyncExternalStore } from "react";
 import {
   getCartSnapshot,
   getServerCartSnapshot,
@@ -11,8 +8,10 @@ import {
   writeCart,
 } from "@/utils/common";
 import { products, whatsappNumber } from "@/utils/constant";
-import { formatPrice } from "@/utils/common";
 import { CartLine } from "@/utils/type";
+import Image from "next/image";
+import Link from "next/link";
+import { useMemo, useState, useSyncExternalStore } from "react";
 
 export default function CartPage() {
   const cartSnapshot = useSyncExternalStore(
@@ -43,14 +42,14 @@ export default function CartPage() {
     [cart]
   );
 
-  const total = cartProducts.reduce((sum, line) => sum + line.product.price * line.quantity, 0);
+  // const total = cartProducts.reduce((sum, line) => sum + line.product.price * line.quantity, 0);
   const whatsappMessage = [
     "Hello Shooz Buddy, I'd like to place this order:",
     ...cartProducts.map(
-      (line) =>
-        `- ${line.product.name} x ${line.quantity}: ${formatPrice(line.product.price * line.quantity)}`
+      (line) => `- ${line.product.name} x ${line.quantity} Quantity` // Removed price from the message as per the comment
+      // `- ${line.product.name} x ${line.quantity}: ${formatPrice(line.product.price * line.quantity)}`
     ),
-    `Order total: ${formatPrice(total)}`,
+    // `Order total: ${formatPrice(total)}`,
     "",
     "Please let me know the next steps and delivery details.",
   ].join("\n");
@@ -126,7 +125,7 @@ export default function CartPage() {
                   />
                   <div className="min-w-0 flex-1">
                     <h2 className="text-lg font-semibold text-slate-900">{product.name}</h2>
-                    <p className="mt-1 text-sm text-slate-600">{formatPrice(product.price)} each</p>
+                    {/* <p className="mt-1 text-sm text-slate-600">{formatPrice(product.price)} each</p> */}
                     <div className="mt-4 flex flex-wrap items-center gap-3">
                       <label className="flex items-center gap-2 text-sm font-medium text-slate-700">
                         Quantity
@@ -159,9 +158,9 @@ export default function CartPage() {
                       </button>
                     </div>
                   </div>
-                  <p className="text-lg font-bold text-slate-900 sm:text-right">
+                  {/* <p className="text-lg font-bold text-slate-900 sm:text-right">
                     {formatPrice(product.price * quantity)}
-                  </p>
+                  </p> */}
                 </article>
               ))}
             </div>
@@ -169,8 +168,8 @@ export default function CartPage() {
             <aside className="h-fit rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
               <h2 className="text-xl font-bold text-slate-900">Order summary</h2>
               <div className="mt-5 flex justify-between gap-4 border-b border-slate-200 pb-4 text-slate-600">
-                <span>Subtotal</span>
-                <span>{formatPrice(total)}</span>
+                {/* <span>Subtotal</span>
+                <span>{formatPrice(total)}</span> */}
               </div>
               <p className="mt-4 text-sm leading-6 text-slate-500">
                 Delivery details and any delivery charges will be confirmed with you on WhatsApp.

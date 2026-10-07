@@ -1,28 +1,41 @@
 "use client";
 
 import { useEffect } from "react";
-import gsap from "gsap";
+
 function ScrollAnimations() {
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>(".reveal").forEach((element) => {
-        gsap.from(element, {
-          y: 80,
-          opacity: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: element,
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse",
-          },
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const elements = document.querySelectorAll<HTMLElement>(".reveal");
+    if (!("IntersectionObserver" in window)) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          entry.target.classList.remove("reveal-ready");
+          entry.target.classList.add("reveal-visible");
+          observer.unobserve(entry.target);
         });
-      });
+      },
+      { threshold: 0.12 }
+    );
+
+    elements.forEach((element) => {
+      element.classList.add("reveal-ready");
+      observer.observe(element);
     });
 
-    return () => ctx.revert();
+    return () => {
+      observer.disconnect();
+      elements.forEach((element) => {
+        element.classList.remove("reveal-ready", "reveal-visible");
+      });
+    };
   }, []);
+
   return null;
 }
+
 export default ScrollAnimations;
