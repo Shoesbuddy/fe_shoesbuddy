@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { Footer, Header } from "@/component";
 import ContextProvider from "@/context";
-import { SmoothScroll } from "@/utils";
+import { ScrollAnimations, SmoothScroll } from "@/utils";
 
 const siteUrl = new URL("https://shoosbuddy.co.uk");
 
@@ -73,9 +73,7 @@ const organizationJsonLd = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body
-        className="min-h-screen  overflow-x-hidden overflow-y-auto snap-y snap-mandatory scroll-smooth "
-        cz-shortcut-listen="true">
+      <body className="min-h-screen overflow-x-hidden" cz-shortcut-listen="true">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -83,6 +81,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           }}
         />
         <SmoothScroll />
+        <ScrollAnimations />
         <ContextProvider>
           <Header />
           <main>{children}</main>
