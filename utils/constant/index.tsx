@@ -7,7 +7,6 @@ export const navItems = [
   { href: "/#products", label: "Product" },
   { href: "/#gallery", label: "Gallery" },
   { href: "/#contact-us", label: "Contact Us" },
-  { href: "/cart", label: "Cart" },
 ] as const;
 
 export const products: Product[] = [
@@ -17,6 +16,9 @@ export const products: Product[] = [
     price: 0.0,
     description: "A complete care set for deep cleaning and restoring your favorite pairs.",
     image: "/images/completepremiumcleaningkit.jpeg",
+    shopifyUrl: "https://shoozbuddy-limited.myshopify.com/",
+    amazonUrl:
+      "https://www.amazon.co.uk/s/ref=bl_sl_s_sh_web_355005011?ie=UTF8&node=355005011&field-brandtextbin=Shooz+Buddy",
   },
   {
     id: "shoe-care-solution",
@@ -28,4 +30,4 @@ export const products: Product[] = [
 ] as const;
 
 export const whatsappNumber = "447818313637" as const;
-export const contactEmail = "info@shoosbuddy.co.uk" as const;
+export const contactEmail = "shoozbuddy@gmail.com" as const;
