@@ -4,6 +4,8 @@ export type Product = {
   price: number;
   description: string;
   image: string;
+  shopifyUrl?: string;
+  amazonUrl?: string;
 };
 
 export type CartLine = {

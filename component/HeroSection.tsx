@@ -8,6 +8,8 @@ function HeroSection() {
         muted
         loop
         playsInline
+        preload="none"
+        poster="/images/beforeafter.jpeg"
         aria-hidden="true"
         className="absolute inset-0 h-full w-full object-cover object-[center_40%] sm:object-center">
         <source src="/introvideo.mp4" type="video/mp4" />
