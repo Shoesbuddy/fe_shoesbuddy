@@ -43,7 +43,7 @@ export default function Header() {
               {item.label}
             </Link>
           ))}
-          <Link className="site-nav-cta" href="/#products">
+          <Link className="site-nav-cta" href="/shop">
             Shop now{" "}
             <span className="ml-2" aria-hidden="true">
               ↗
@@ -77,10 +77,7 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              className="site-nav-cta w-full"
-              href="/#products"
-              onClick={() => setIsOpen(false)}>
+            <Link className="site-nav-cta w-full" href="/shop" onClick={() => setIsOpen(false)}>
               Shop now{" "}
               <span className="ml-2" aria-hidden="true">
                 ↗

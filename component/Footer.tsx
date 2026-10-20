@@ -1,4 +1,4 @@
-import { whatsappNumber } from "@/utils/constant";
+import { contactEmail, whatsappNumber } from "@/utils/constant";
 import Link from "next/link";
 
 const Footer = () => {
@@ -71,7 +71,7 @@ const Footer = () => {
                 className="transition hover:text-white">
                 WhatsApp
               </Link>
-              <a href="mailto:" className="transition hover:text-white">
+              <a href={`mailto:${contactEmail}`} className="transition hover:text-white">
                 Email us
               </a>
             </div>
