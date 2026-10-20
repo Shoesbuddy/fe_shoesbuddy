@@ -7,7 +7,7 @@ import {
   subscribeToCart,
   writeCart,
 } from "@/utils/common";
-import { products, whatsappNumber } from "@/utils/constant";
+import { products } from "@/utils/constant";
 import { CartLine } from "@/utils/type";
 import Image from "next/image";
 import Link from "next/link";
@@ -42,18 +42,8 @@ export default function CartPage() {
     [cart]
   );
 
-  // const total = cartProducts.reduce((sum, line) => sum + line.product.price * line.quantity, 0);
-  const whatsappMessage = [
-    "Hello Shooz Buddy, I'd like to place this order:",
-    ...cartProducts.map(
-      (line) => `- ${line.product.name} x ${line.quantity} Quantity` // Removed price from the message as per the comment
-      // `- ${line.product.name} x ${line.quantity}: ${formatPrice(line.product.price * line.quantity)}`
-    ),
-    // `Order total: ${formatPrice(total)}`,
-    "",
-    "Please let me know the next steps and delivery details.",
-  ].join("\n");
-  const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+  const shopifyUrl = products.find((product) => product.shopifyUrl)?.shopifyUrl;
+  const amazonUrl = products.find((product) => product.amazonUrl)?.amazonUrl;
 
   const updateCart = (nextCart: CartLine[]) => {
     try {
@@ -171,18 +161,33 @@ export default function CartPage() {
                 {/* <span>Subtotal</span>
                 <span>{formatPrice(total)}</span> */}
               </div>
-              <p className="mt-4 text-sm leading-6 text-slate-500">
-                Delivery details and any delivery charges will be confirmed with you on WhatsApp.
+              <p className="mt-4 text-sm leading-6 text-slate-600">
+                WhatsApp ordering is temporarily unavailable. Please complete your purchase through
+                one of our online stores.
               </p>
-              <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[#16834b] px-5 py-3.5 text-center font-semibold text-white transition hover:bg-[#116b3d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16834b]">
-                Place order via WhatsApp
-              </a>
+              <div className="mt-6 flex flex-col gap-3">
+                {shopifyUrl && (
+                  <a
+                    href={shopifyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex w-full items-center justify-center rounded-full bg-[#008060] px-5 py-3.5 text-center font-semibold text-white transition hover:bg-[#006e52] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#008060]">
+                    Shop on Shopify
+                  </a>
+                )}
+                {amazonUrl && (
+                  <a
+                    href={amazonUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex w-full items-center justify-center rounded-full bg-[#ff9900] px-5 py-3.5 text-center font-semibold text-[#1b1b19] transition hover:bg-[#e88b00] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff9900]">
+                    Buy on Amazon
+                  </a>
+                )}
+              </div>
               <p className="mt-3 text-center text-xs leading-5 text-slate-500">
-                WhatsApp opens with your order ready to send. Nothing is sent automatically.
+                Your saved cart won&apos;t transfer to the retailer. Please add your items to your
+                order on their website.
               </p>
             </aside>
           </div>
