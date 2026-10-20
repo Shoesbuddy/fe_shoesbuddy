@@ -1,26 +1,10 @@
 "use client";
-import ShopNowButton from "@/component/ShopNowButton";
-import { addToCart, formatPrice } from "@/utils/common";
+import ProductPurchaseLinks from "@/component/ProductPurchaseLinks";
+import { formatPrice } from "@/utils/common";
 import { products } from "@/utils/constant";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 function ProductSection() {
-  const router = useRouter();
-  const [error, setError] = useState("");
-
-  function handleShopNowClick(id: string) {
-    try {
-      addToCart(id);
-      router.push("/cart");
-    } catch {
-      setError(
-        "We couldn't save this item. Please check your browser storage settings and try again."
-      );
-    }
-  }
-
   return (
     <section className="products-section" id="products">
       <div className="mx-auto max-w-6xl px-6 py-24 sm:px-10 lg:py-28">
@@ -63,9 +47,7 @@ function ProductSection() {
 
                 <p className="mb-6 text-sm leading-6 text-slate-600">{product.description}</p>
 
-                <ShopNowButton onClick={() => handleShopNowClick(product.id)} error={error}>
-                  Shop Now
-                </ShopNowButton>
+                <ProductPurchaseLinks product={product} />
               </div>
             </article>
           ))}
