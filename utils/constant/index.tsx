@@ -30,4 +30,4 @@ export const products: Product[] = [
 ] as const;
 
 export const whatsappNumber = "447818313637" as const;
-export const contactEmail = "shoozbuddy@gmail.com" as const;
+export const contactEmail = "shoozbuddylimited@gmail.com" as const;
